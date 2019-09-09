@@ -2,7 +2,7 @@
 FROM php:7.3-alpine
 RUN ls -l /usr/local/bin/
 
-FROM docker
+FROM docker:dind-rootless
 
 COPY --from=0 /usr/local/bin/* /usr/local/bin/
 COPY --from=0 /usr/local/lib/php/extensions/no-debug-non-zts-20180731/* /usr/local/lib/php/extensions/no-debug-non-zts-20180731/
