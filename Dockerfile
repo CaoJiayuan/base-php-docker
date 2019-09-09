@@ -4,6 +4,11 @@ FROM php:7.3.9-alpine3.10
 RUN apk add --no-cache \
 		ca-certificates
 
+# with composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/bin --filename=composer\
+    && php -r "unlink('composer-setup.php');"
+
 # set up nsswitch.conf for Go's "netgo" implementation (which Docker explicitly uses)
 # - https://github.com/docker/docker-ce/blob/v17.09.0-ce/components/engine/hack/make.sh#L149
 # - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275
