@@ -17,6 +17,8 @@ RUN set -eux; \
 	addgroup -g 82 -S www-data; \
 	adduser -u 82 -D -S -G www-data www-data
 
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
 RUN apk add --no-cache \
 		ca-certificates \
 		curl \
@@ -150,5 +152,11 @@ RUN set -eux; \
 
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 RUN chmod -R +x /usr/local/bin/docker-php-*
+
+# install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+ 	&& composer-setup.php --install-dir=bin --filename=composer \
+	&& -r "unlink('composer-setup.php');"
+
 # sodium was built as a shared module (so that it can be replaced later if so desired), so let's enable it too (https://github.com/docker-library/php/issues/598)
 RUN docker-php-ext-enable sodium
