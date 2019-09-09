@@ -9,8 +9,4 @@ script:
   - docker build -t cjy632258/php-base .
 
 after_success:
-  - docker push cjy632258/php-fpm-slim:supervisor
-  - docker push cjy632258/php-fpm-slim
-  - docker push cjy632258/php-fpm-slim:nginx
-  - docker push cjy632258/php-fpm-slim:grpc
-  - docker push cjy632258/php-cli
+  - docker push cjy632258/php-base
