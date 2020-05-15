@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ release/* ]
+    tags: [ release/* ]
 jobs:
   build:
     runs-on: ubuntu-latest
