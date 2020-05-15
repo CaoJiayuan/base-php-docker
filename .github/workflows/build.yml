@@ -8,9 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: azure/docker-login@v1
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PWD }}
     - name: Build the Docker image
       run: |
-        echo $DOCKER_PWD | docker login -u $DOCKER_USER --password-stdin
         IMAGE_TAG=${GITHUB_REF##*/}
         IMAGE=cjy632258/php-base
         docker build --tag $IMAGE:latest --tag $IMAGE:$IMAGE_TAG .
