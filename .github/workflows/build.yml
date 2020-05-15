@@ -9,4 +9,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: ${GITHUB_REF##*/}
+      run: |
+        echo $DOCKER_PWD | docker login -u $DOCKER_USER --password-stdin
+        IMAGE_TAG=${GITHUB_REF##*/}
+        IMAGE=cjy632258/php-base
+        docker build --tag $IMAGE:latest --tag $IMAGE:$IMAGE_TAG .
+        docker push $IMAGE:latest 
+        docker push $IMAGE:$IMAGE_TAG
